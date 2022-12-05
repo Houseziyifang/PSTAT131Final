@@ -1,0 +1,19 @@
+"credit_score" - double, normalized credit score
+"age" - double, normalized age
+"tenure" - double, normalized tenure
+"balance" - double, normalized client balance
+"estimated_salary" - double, normalized client's salary
+"country_France" - double, normalized, one hot encoded client's country France
+"country_Germany" - double, normalized, one hot encoded client's country Germany
+"country_Spain" -  - double, normalized, one hot encoded client's country Spain
+"gender_Female"  - double, normalized, one hot encoded client's gender Female
+"gender_Male" - double, normalized, one hot encoded client's gender Male
+"products_number_X1" - double, normalized, one hot encoded client's product number 1
+"products_number_X2" - double, normalized, one hot encoded client's product number 2
+"products_number_X3" - double, normalized, one hot encoded client's product number 3
+"products_number_X4" - double, normalized, one hot encoded client's product number 4
+"credit_card_X0" - double, normalized, one hot encoded variable if client does not have a credit card at the bank
+"credit_card_X1" - double, normalized, one hot encoded variable if client has a credit card at the bank
+"active_member_X0"  - double, normalized, one hot encoded variable if client is not active
+"active_member_X1"  - double, normalized, one hot encoded variable if client is active
+"churn" - factor, target value.

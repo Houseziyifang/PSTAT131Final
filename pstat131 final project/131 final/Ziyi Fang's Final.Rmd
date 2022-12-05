@@ -1,0 +1,1001 @@
+---
+title: "Bank Client Churn Prediction"
+date: "2022-11-04"
+output:
+  html_document:
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+  word_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = F,message = F)
+```
+
+
+# Introduction
+Today's market is fast-paced and cutthroat. It's because there are so many different options for where to get the service you need. Service providers face difficulties in adapting to their customers' shifting behaviors and increasing expectations. Compared to past generations, today's consumers have much higher expectations and make a wider variety of requests regarding connectivity and novel, individualized approaches. Their education and exposure to new methods put them at the forefront of change. Their buying habits have shifted as a result of their new found knowledge, and they now frequently engage in what is known as "analysis-paralysis," or excessively deliberating over every detail of the selling and buying process. Therefore, it is imperative that the next generation of service providers innovate creatively in order to meet client needs and increase their value. Companies should value their customers. Shukla (2021) notes that rising levels of competition are placing pressure on businesses to experiment with new marketing strategies in order to keep up with shifting consumer preferences and keep their existing clientele satisfied. Canning) contends that delivering more to everyone is no longer a sustainable sales approach, and that an increasingly competitive market necessitates a plan that prioritizes the most efficient application of marketing resources. In order to keep up with the competition, businesses have turned to technology. The extraction of marketing knowledge and additional direction for business decisions is a common application of data mining techniques. In search of better service or interest rates, customers can quickly and easily migrate from one organization (bank) to another (Jain, et al., 2021). Many businesses have come to believe that acquiring new consumers is a much more challenging and pricey endeavor than maintaining relationships with existing ones. However, another major obstacle is providing quality service to consumers on time and within budget while also having a positive working relationship with them. In order to overcome these obstacles, they must prioritize the wishes of their customers. In particular, they will be focusing on reducing customer turnover. When a company's customers or subscribers stop using the service or product it provides, this is known as customer churn. To acquire new customers, businesses must utilize their sales and marketing resources in a cycle known as the sales pipeline. Instead of spending money to win over new clients, businesses might save money in the long run by keeping their existing clientele happy. Therefore, it is crucial for any business to have a system in place that can accurately forecast early-stage client turnover. The purpose of this study is to provide a framework for predicting customer attrition in the banking industry by employing a number of Machine Learning methods.
+
+
+## Customer Churn and Its Effects.
+One of the key performance indicators (KPIs) that any successful company must track is the percentage of customer churn among their existing clientele. Many customers leave a business with a high churn rate, which slows growth and has a negative effect on revenue and profits. Companies that have a low churn rate are able to keep their clients. Despite the fact that customer retention rates are not an especially reliable statistic, they are a number that can tell you the truth about how effectively your company is keeping its customers as customers. This is because the number represents the percentage of customers that remain loyal to the company. The percentage of an organization's overall customer base that ceases making use of the organization's product or service after a predetermined length of time has elapsed is referred to as the churn rate for that organization. If you know how many customers you had at the beginning of a certain time period and how many customers you lost within that same time period, you will have the information necessary to acquire a clear grasp of your churn rate.
+
+
+```{r}
+library(vembedr)
+embed_youtube("InOB1wXEkC8")
+```
+
+## Purpose of Study
+The main objective of this project is construct a model that is able to predict customer churn.
+
+
+## Significance of Study
+Businesses make money by selling goods and services. As a result, the ultimate purpose of churn analysis is to lower churn while increasing revenues. As more clients stay for longer periods of time, sales and profits should rise.Moreover, the expenditure of obtaining a new client is significantly higher than the cost of maintaining an existing one. Even a little increase in customer retention, say 5 percent, can result in a minimum 25 percent increase in revenue. This is because repeat customers are far more valuable to your company, providing an additional 67% to your bottom line. Another reason for this is that loyal customers tend to buy more frequently. Because of this, there will be a lower total number of new customers who need to be serviced, which will result in lower marketing expenses for your business. You don't need to put in any additional work or spend any further money in order to persuade your current clients that they should keep doing business with you rather than a competitor.
+
+### Benefits of Analyzing Customer Prediction
+
+By using Analytical Methods to Forecast Customer Churn, organizaztions can:
+
+1) Enhance the consumer experience.
+
+An easy-to-avoid mistake like shipping the wrong item is one of the worst ways to lose a customer. Understanding why consumers leave allows you to better understand their objectives, recognize your own flaws, and improve the entire customer experience.
+
+Customer experience, or "CX," is a customer's perspective or opinion of their interactions with your company. Your brand's perception is created throughout the buyer journey, from the first interaction to after-sales assistance, and has a long-term impact on your organization, including your bottom line.
+Improve your products and services.
+
+You have an opportunity to improve if customers are departing due of particular difficulties with your product, service, or shipping method. Putting these findings into action decreases customer turnover while also improving the overall product or service for future growth.
+
+2) Improve customer loyalty.
+
+Customer retention is the inverse of customer churn. A corporation can keep its consumers while still generating revenue from them. Companies with high customer loyalty can boost the profitability of their existing clients and maximize their lifetime value (LTV).
+If you sell a service for 1,000 per month and keep the customer for another three months, you will earn an extra $3,000 without spending any money on customer acquisition. The scope and amount vary by business, but the premise of "repeat business = lucrative business" is universal.
+ 
+3) Increase Profits
+
+Companies generate revenue by peddling their wares to consumers. As a result, the goal of churn analysis is to decrease customer attrition and boost earnings. An uptick in income and ensuing profits can be expected from a rise in average length of stay.
+
+4) Optimize your products and services
+
+You have an opening to enhance your business if clients are defecting due to particular problems with your product or delivery approach. Improvements to the product or service as a whole and a decrease in customer attrition can be achieved by implementing these findings.
+
+
+# Literature Review
+
+In every industry, the number of service providers has been constantly expanding. Customers today can pick and choose from a wide variety of financial institutions from where to deposit their money. This has made customer retention a major concern for financial institutions. In this research, we offer a strategy for predicting bank customer turnover using machine learning techniques—a subfield of AI. The study encourages more investigation into churn probability by examining customer behavior.
+
+Sayed et al. (2018) investigation was directed based on an assumption that Spark ML bundle has considerably preferred execution and precision over Spark MLlib bundle in managing enormous information. The dataset used in the analysis is comprised of monetary transactions made by bank customers. Based on the data from their transactions, a model was developed using the decision tree algorithm and the two sets of data to predict the likelihood of customer discontent among bank clients. The ML package and its new Data Frame-based APIs have been subjected to granular testing, with the results documenting improved testing performance and forecasting accuracy.This paper proved, that customer churn prediction is attainaible with the right tuning.However, f r this reserch we will not be using any secondary data from a bank and use machine learning algrothms models to evaluate their predictive power. They will be tuned to provide the best model structure so as to improve their prediction ability.
+
+Rahman and Kumar (2020) employed a number of different classifiers, including the KNN, SVM, Decision Tree, and Random Forest methods. In addition, feature selection techniques have been developed to identify the most important traits and validate the efficiency of the system. Kaggle's churn modeling dataset was used for the experiments. A suitable model with improved accuracy and predictability is identified by comparing the outcomes. Therefore, after oversampling, the Random Forest model outperforms alternatives in terms of predictive power.
+
+
+Pribil & Polejova (2017) emphasizes on issues of an assumption of the likelihood of a client leaving for rivalry. The expense of gaining another client is generally a few times more than the expense of holding a present client. Agitate demonstrating is a vital asset to help target maintenance activities all the more precisely. A genuine dataset with customer information over which a beat model is produced utilizing strategic relapse and the decision tree is employed in this paper. The CRISP-DM philosophy is tied to the complete procedure. In view of a basic evaluation of the exhibiting technique and its results, ideas are offered for additional work with the models and for enhancing their quality.
+
+Oyeniyi and Adeyemo's (2015) data mining methodology demonstrates how to anticipate which customers are going to make a fuss. Actual customer data from a legitimate Nigerian bank was used in the analysis. WEKA, a data-digging programming instrument for learning exploration, was used to clean, pre-prepare, and analyze the raw data. In the clustering phase, we used simple K-Means, and in the standardization phase, we used JRip, a calculation based on standards. Results showed that the approaches used can determine patterns in client behavior, allowing banks to identify potential churners and develop ways to retain them.
+
+## Data Description
+
+Customer Churn Prediction is a data set that was utilized for the research. This data set is comprised of several different factors of bank customers.It has 11 variables with 10000 observations. The variables belong to various class types namely, integer, character, factor and numeric. Below you will find a concise summary of the most important variables and factors that were taken into consideration throughout the statistical analysis and modeling.
+```
+Feature Description:
+    Customer ID - ID of a client.
+    Credit Score - It is the score which determines the creditworthiness of a client.
+    Country - The country of the client.
+    Gender - gender of client.
+    Age - age of client.
+    Tenure - how many years he/she is having bank acc in Bank.
+    Balance - Account Balance.
+    Products Number - Number of Product from Bank.
+    Credit Card - Does the customer own a credit card of that Bank.
+    Active Member - Is he/she is active Member of bank ?
+    Estimated Salary - Income of the Customer.
+    Churn - Churn (Loss of existing customers) of the Bank.
+    
+```
+
+
+### Libraries
+```{r, warning=FALSE, message=FALSE}
+# Library for data manipulation
+library(tidyverse)
+# Library for machine learning models
+library(tidymodels)
+# Library for recipe function step_up sample for unbalanced data
+library(themis)
+# Library for tuning functions
+library(stacks)
+#Library for random forest model
+library(ranger)
+#Library for boosted tree model
+library(xgboost)
+#Library for logistic regression model
+library(glmnet)
+library(kknn)
+```
+
+# Data preprocessing
+
+### Data cleaning
+
+The data was relatively tidy, it is still crucial to look for any missing values and also ensure that the allocated variable class types were accurate so as to ensure a smooth analysis process.
+
+```{r, warning=FALSE, message=FALSE}
+data <- read.csv("Bank Customer Churn Prediction.csv")
+str(data)
+```
+
+```{r}
+data %>% skimr::skim() %>% 
+  skimr::yank("numeric") %>% as_tibble() %>% 
+  select(-p25, -p75) %>% knitr::kable()
+data %>% skimr::skim() %>% skimr::yank("character")
+
+```
+
+There are 10000 observations with 0 missing values.
+Some variables despite being factors shown as numeric values e.g. churn, credit_card etc, lets convert them into factors. Also lets remove id column as we would not need it.
+```{r, warning=FALSE, message=FALSE}
+data %>% 
+  select(-customer_id) %>% 
+  mutate(products_number = as.factor(products_number)) %>%
+  mutate(credit_card = as.factor(credit_card)) %>% 
+  mutate(active_member = as.factor(active_member)) %>% 
+  mutate(churn = as.factor(churn)) ->  data
+  
+```
+
+### Data spliting
+Let's split data on train and test sets. With proportion 80% train data, 20% test data. The train set will be used in modelling while the test set will be used to test the accuracy of the models.
+```{r, warning=FALSE, message=FALSE}
+set.seed(420)
+data_split <- data %>% 
+  initial_split(prop = 0.8, strata = "churn")
+
+train_data <- training(data_split)
+test_data <- testing(data_split)
+
+dim(train_data)
+dim(test_data)
+```
+
+We have 7999 observations in our train dataset and 2001 observations in the test set
+
+# Exploratory Data Analysis
+
+### Distribution of Gender
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE}
+train_data %>% 
+  count(gender) %>% 
+  ggplot()+
+  aes(gender, n)+
+  geom_col()+
+  labs(x = "", y  ="")+
+  theme_light()+
+  coord_flip()
+
+```
+It is noted that the data records the largest number of its customers are male rather than female. Historically, female business owners have had more trouble or paid more to get bank loans. These issues may be caused by supply-side discrimination or by the profitability of businesses held by men and women differently. The fact that more men than women use banks, particularly for deposit accounts, may be due to the difficulty in obtaining bank loans.
+
+### Distribution of Gender by country
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE}
+train_data%>% 
+  group_by(gender, country) %>% 
+  count() %>% 
+  ggplot(aes(gender, n, fill = gender)) +
+  geom_col(show.legend = FALSE) + 
+  facet_wrap(~country, scales = "free_y") +
+  coord_flip() +
+  labs(
+    title = "Distribution of Gender by country",
+    y = "Gender"
+  )
+```
+Across the three countries recorded in this data,the higher proportion of customers are male. It seems that the historical tendency of female business owners having more trouble to get bank loans exists across all the countries as depicted in France,German and Spain.
+
+### How many contries are there?
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE}
+train_data %>% 
+  count(country) %>% 
+  ggplot()+
+  aes(country, n)+
+  geom_col()+
+  labs(x = "", y  ="")+
+  theme_light()+
+  coord_flip()
+
+```
+
+There 3 countries, namely, Spain, Germany and France. Based on the above plot, France has the highest count compared to Spain and Germany.
+
+### Distribution of balance
+
+```{r}
+ggplot(train_data, aes(x=balance)) + 
+  geom_histogram()+ggtitle("Distribution of balance")+xlab("Balance")+ylab("Frequency")
+```
+
+
+### Distribution of balance by gender
+
+```{r}
+ggplot(train_data, aes(x=balance,fill=gender)) + 
+  geom_histogram()+ggtitle("Distribution of balance by gender")+xlab("Balance")+ylab("Frequency")+ 
+  facet_wrap(~gender, scales = "free_y")
+```
+
+### Distribution of balance by country
+
+```{r}
+ggplot(train_data, aes(x=balance,fill=country)) + 
+  geom_histogram()+ggtitle("Distribution of balance by country")+xlab("Balance")+ylab("Frequency")+ 
+  facet_wrap(~country, scales = "free_y")
+```
+
+### Distribution of balance per product type
+
+```{r}
+ggplot(train_data, aes(reorder(products_number, balance), balance,fill=products_number)) +
+  geom_boxplot(varwidth = TRUE) + 
+  coord_flip() +
+  labs(
+    title = "Distribution of balance per product type",
+    x = "Products number(type)"
+  )
+```
+
+### Distribution of balance per gender
+
+```{r}
+ggplot(train_data, aes(reorder(gender, balance), balance,fill=gender)) +
+  geom_boxplot(varwidth = TRUE) + 
+  coord_flip() +
+  labs(
+    title = "Distribution of balance per gender",
+    x = "Gender"
+  )
+```
+
+### Distribution of balance per churn
+
+```{r}
+ggplot(train_data, aes(reorder(churn, balance), balance,fill=churn)) +
+  geom_boxplot(varwidth = TRUE) + 
+  coord_flip() +
+  labs(
+    title = "Distribution of balance per churn",
+    x = "Churn"
+  )
+```
+
+Looking at the distribution of bank loan balances across all factors under consideration,loan balances assumes a normal distribution. Most of the customers have average bank balances irrespective of gender and country.The customer balances which are above and lower than the average is almost equal, and a very small number of customers have extremely large and small balances. However,the distribution of balances differs by product type and churn. Most customers tend to have large balances in product type one and few balances in product type 2. According to churn,most people who are leaving have very large balances as compared to those who remain.
+
+### Distribution of Estimated salary
+
+```{r}
+ggplot(train_data, aes(x=estimated_salary)) + 
+  geom_histogram()+ggtitle("Distribution of estimated salary")+xlab("Balance")+ylab("Frequency")
+```
+
+
+### Distribution of estimated salary by gender
+
+```{r}
+ggplot(train_data, aes(x=estimated_salary,fill=gender)) + 
+  geom_histogram()+ggtitle("Distribution of estimated salary by gender")+xlab("Estimated salary")+ylab("Frequency")+ 
+  facet_wrap(~gender, scales = "free_y")
+```
+
+### Distribution of estimated salary by country
+
+```{r}
+ggplot(train_data, aes(x=estimated_salary,fill=country)) + 
+  geom_histogram()+ggtitle("Distribution of estimated salary by country")+xlab("Estimated salary")+ylab("Frequency")+ 
+  facet_wrap(~country, scales = "free_y")
+```
+
+### Distribution of estimated salary per product type
+
+```{r}
+ggplot(train_data, aes(reorder(products_number,estimated_salary), balance,fill=products_number)) +
+  geom_boxplot(varwidth = TRUE) + 
+  coord_flip() +
+  labs(
+    title = "Distribution of estimated salary per product type",
+    x = "Products number(type)"
+  )
+```
+
+### Distribution of estimated salary per gender
+
+```{r}
+ggplot(train_data, aes(reorder(gender, estimated_salary), estimated_salary,fill=gender)) +
+  geom_boxplot(varwidth = TRUE) + 
+  coord_flip() +
+  labs(
+    title = "Distribution of estimated salary per gender",
+    x = "Gender"
+  )
+```
+
+### Distribution of estimated salary per churn
+
+```{r}
+ggplot(train_data, aes(reorder(churn, estimated_salary), estimated_salary,fill=churn)) +
+  geom_boxplot(varwidth = TRUE) + 
+  coord_flip() +
+  labs(
+    title = "Distribution of estimated salary per churn",
+    x = "Churn"
+  )
+```
+We note that the estimated salary assumes a normal distribution irrespective of all categories except in product type. Most of customers have average estimated income in terms of salary.The customer salaries which are above and lower than the average is almost equal. Only few customers have extremely low salaries and extremely large salaries. However,those customers classified to product type number four,although they are few,they seem to have the largest estimated salary as compared to customers classified with other product types.
+
+#### Age Vs Estimated salary by product number
+
+```{r}
+train_data %>% 
+  ggplot(aes(age,estimated_salary)) +
+  geom_point(alpha = 0.1) +
+  stat_summary(fun.y=mean, colour="red", geom="line", size = 1)+
+  facet_wrap(~products_number, scales = "free") +
+  labs(
+    title = "Age Vs Estimated salary by product number"
+  )
+
+```
+
+#### Age Vs Estimated salary by country
+
+```{r}
+train_data %>% 
+  ggplot(aes(age,estimated_salary)) +
+  geom_point(alpha = 0.1) +
+  stat_summary(fun.y=mean, colour="red", geom="line", size = 1)+
+  facet_wrap(~country, scales = "free") +
+  labs(
+    title = "Age Vs Estimated salary by country"
+  )
+```
+
+#### Age Vs Estimated salary by churn
+
+```{r}
+train_data %>% 
+  ggplot(aes(age,estimated_salary)) +
+  geom_point(alpha = 0.1) +
+  stat_summary(fun.y=mean, colour="red", geom="line", size = 1)+
+  facet_wrap(~churn, scales = "free") +
+  labs(
+    title = "Age Vs Estimated salary by churn"
+  )
+```
+
+There seems to have no relationship between the age of the customer and the estimated salary.If there exist a relationship,it might be very insignificant negative relationship between the duo. We expect the very young people to have very low salaries since their education qualification might differ with age. However,since the banks can control the age of its customers,it seems that almost all customers lie in the same age group,meaning that they have almost average salary. This explains why the plots irrespective of any category shows no relationship between the age and salary of a customer.
+
+#### Age Vs balance by product number
+
+```{r}
+train_data %>% 
+  ggplot(aes(age,balance)) +
+  geom_point(alpha = 0.1) +
+  stat_summary(fun.y=mean, colour="red", geom="line", size = 1)+
+  facet_wrap(~products_number, scales = "free") +
+  labs(
+    title = "Age Vs balance by product number"
+  )
+```
+
+#### Age Vs balance by country
+
+```{r}
+train_data %>% 
+  ggplot(aes(age,estimated_salary)) +
+  geom_point(alpha = 0.1) +
+  stat_summary(fun.y=mean, colour="red", geom="line", size = 1)+
+  facet_wrap(~country, scales = "free") +
+  labs(
+    title = "Age Vs balance by country"
+  )
+```
+
+#### Age Vs balance by churn
+
+```{r}
+train_data %>% 
+  ggplot(aes(age,estimated_salary)) +
+  geom_point(alpha = 0.1) +
+  stat_summary(fun.y=mean, colour="red", geom="line", size = 1)+
+  facet_wrap(~churn, scales = "free") +
+  labs(
+    title = "Age Vs balance by churn"
+  )
+
+```
+Note that,the relationship between the age of a customer and the balance he/she has is insignificant. If there,then it might be very minimal positive relationship. Similary to relationship between age and salary,the banks control for age of its customers. this might explain as to why relations lacks.
+
+
+### Is churn different in those countries?
+```{r, collapse=TRUE, warning=FALSE, message=FALSE}
+train_data %>% 
+  mutate(churn = if_else(churn == "1", TRUE, FALSE)) %>% 
+  count(country, churn) %>% 
+  ggplot()+
+  aes(country, n, fill = churn)+
+  geom_col(position = "dodge")+
+  labs(x = "", y  ="")+
+  theme_light()+
+  coord_flip()
+```
+
+As we can see churn in Germany proportionally higher than France and Spain. This has enforced Germany to workout on ways to manage this churn. Germany's financial services market is very crowded, therefore it might be difficult for established businesses to differentiate their service offerings. Due to a large selection of alternative financial products and competing providers, the percentage of customers transferring to other financial service providers has increased dramatically. Because of this, client churn rates have increased recently. This has highlighted the value of churn analysis and its function in retaining customers. Additionally, research indicate that substantial expenditures in the form of lost earnings have been associated with customer churn. This denotes a loss of revenue from both the customers themselves and from other value-added contributors.
+
+Due to the complexity of the datasets, the client, a top German banking firm, found it difficult to pinpoint the cause of customer churn. The client was also looking for appropriate churn analysis models to aid in understanding different customer groups' preferences and determining the risk of churn that went along with them.
+
+In order to analyze scenarios, foresee hazards, forecast resources, balance risks against projected profits, and endeavor to satisfy regulatory requirements, the German banking institution partnered with Quantzig to take use of its expertise in providing customer churn analytics solutions. The client was able to improve customer retention by 85%, decrease customer churn from 10% to 3%, and increase overall annual ROI by 70% because to Quantzig's customer churn analysis engagement.
+
+### Does the product number affect churn
+
+The bank has four product which a customer can choose from. Let's evaluate whether the type of product affects churn.
+
+```{r}
+train_data %>% 
+  mutate(churn = if_else(churn == "1", TRUE, FALSE)) %>% 
+  count(products_number, churn) %>% 
+  ggplot()+
+  aes(products_number, n, fill = churn)+
+  geom_col(position = "dodge")+
+  labs(x = "", y  ="")+
+  theme_light()+
+  coord_flip()
+
+```
+
+First, products 3 and 4 do not have many customers. Moreover, the churn is higher than any of the current clients. This could possibly signify that product is not very popular with customer. Another probability is that they migrated to product 1 and 2 which have proportionally lower churn. However, product 2 is the most liked with the lowest churn.
+
+### Does the fact that a customer is active or not affect the churn
+
+```{r}
+train_data %>% 
+  mutate(churn = if_else(churn == "1", TRUE, FALSE)) %>% 
+  count(active_member, churn) %>% 
+  ggplot()+
+  aes(active_member, n, fill = churn)+
+  geom_col(position = "dodge")+
+  labs(x = "", y  ="")+
+  theme_light()+
+  coord_flip()
+
+```
+
+It is evident that inactive members have a higher churn rate than active members.Additionally, it is alarming that the number of inactive member is very higher which could signify an increase in the churn rate over time
+
+### Does gender affect the churn?
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE}
+train_data %>% 
+  mutate(churn = if_else(churn == "1", TRUE, FALSE)) %>% 
+  count(gender, churn) %>% 
+  ggplot()+
+  aes(gender, n, fill = churn)+
+  geom_col(position = "dodge")+
+  labs(x = "", y  ="")+
+  theme_light()+
+  coord_flip()
+```
+
+Although the frequency of leaver in both gender is almost similar the proportion is significantly lower for males. Hence, there is a clear difference between genders. Women more like would leave the bank than men.
+
+### Diffrence in Age distributions for people who left the and those who stayed
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE}
+train_data %>% 
+  mutate(churn = if_else(churn == "1", TRUE, FALSE)) %>% 
+  ggplot()+
+  aes(age, fill = churn)+
+  geom_density(alpha = 0.5)+
+  theme_light()+
+  labs(x = "Age", y  ="")
+```
+
+The above plots represent the density distribution of active and inactive members based on age. Majority of the active customer all within the 20 to 50 years range thus having with the majority being centered around the mean. On the other hand, the inactive density distribution is more to the right which signifies a higher age average. 
+
+### Does balance of the client affect churn rate?
+
+```{r}
+train_data %>% 
+  mutate(churn = if_else(churn == "1", TRUE, FALSE)) %>% 
+  ggplot()+
+  aes(balance, churn, fill = churn)+
+  geom_boxplot()+
+  # facet_wrap(~country)+
+  theme_light()+ 
+  coord_flip()
+  
+```
+
+Accounts with balances equal zero skew the data, lets look at non zero balances
+
+```{r}
+train_data %>% 
+  mutate(churn = if_else(churn == "1", TRUE, FALSE)) %>% 
+  filter(balance != 0) %>%
+  ggplot()+
+  aes(balance, churn, fill = churn)+
+  geom_boxplot()+
+  # facet_wrap(~country)+
+  theme_light()+ 
+  coord_flip()
+  
+```
+
+There are no meaningful difference in distributions. May be there is difference for genders or countries?
+
+
+```{r}
+train_data %>% 
+  mutate(churn = if_else(churn == "1", TRUE, FALSE)) %>% 
+  filter(balance != 0) %>%
+  ggplot()+
+  aes(balance, churn, fill = churn)+
+  geom_boxplot()+
+  facet_wrap(~country)+
+  theme_light()+ 
+  coord_flip()
+  
+```
+
+
+```{r}
+train_data %>% 
+  mutate(churn = if_else(churn == "1", TRUE, FALSE)) %>% 
+  filter(balance != 0) %>%
+  ggplot()+
+  aes(balance, churn, fill = churn)+
+  geom_boxplot()+
+  facet_wrap(~gender)+
+  theme_light()+ 
+  coord_flip()
+  
+```
+
+The boxplot represent the interaction between the churn and the other two variables, churn and gender. Clearly, the account balance is not statistically significant in explaining the Churn rate.
+
+### Is having a credit card would affect churn?
+
+```{r}
+train_data %>% 
+  mutate(churn = if_else(churn == "1", TRUE, FALSE)) %>% 
+  mutate(credit_card = if_else(credit_card == "1", "Yes", "No")) %>% 
+  count(credit_card, churn) %>% 
+  ggplot()+
+  aes(credit_card, n, fill = churn)+
+  geom_col(position = "fill")+
+  labs(y = "percentage", x = "having a credit card")
+```
+
+Looks like there is no difference hence possession of a credit is not significantly associated to the churn  rate.
+
+### Does income affect rate of churn?
+```{r}
+train_data %>% 
+  mutate(churn = if_else(churn == "1", TRUE, FALSE)) %>% 
+  ggplot()+
+  aes(estimated_salary, churn, fill = churn)+
+  geom_boxplot()+
+  theme_light()+ 
+  coord_flip()
+  
+```
+
+Nope.
+
+Looks like there is no difference in the income since the mean of both groups are the same. 
+In this case the EDA was important because it assisted in identifying  significant variables that can be used in building the models. Using a lot of variables usually leads to over fitting. Although, a model with a high fit can explain a lot of variation in data, its prediction accuracy is reduced.
+
+# Statistical Analysis
+
+Machine learning relies heavily on supervised learning. When the predictable variable is of the categorical type, classification methods are employed. When the data has been properly preprocessed, it can be used in an operational capacity. As for the rest of the research, it uses the same set of 10 traits that were gleaned from the pre-processing phase. Eighty percent of the data will be used for training, while the remaining twenty percent will be used arbitrarily for testing. Both the classifiers and the detailed feature selection techniques will see action. The accuracy gained from 5 rounds of cross-validation is used to rank the models. Every model also has its own unique confusion matrix that was generated randomly. Classifier efficiency can change depending on the approach used to choose features. In the following paragraphs, we will describe the features chosen by each feature selection method and the parameters used by the classifiers
+
+### Recipe
+
+First lets create a recipe for our data. Recipes provide an alternate approach for building and preprocessing design matrices that can be used for modeling or visualization.
+```{r, collapse=TRUE, warning=FALSE, message=FALSE}
+train_data$tenurre<-NULL
+set.seed(421)
+recipe(churn ~ ., train_data) %>%
+  # encode factors with one hot encoder
+  step_dummy(all_nominal(), -all_outcomes(), one_hot = TRUE) %>%
+  # normalize all predictor
+  step_center(all_predictors()) %>%
+  step_scale(all_predictors()) %>%
+  # upscale churn variable with smote algorithm 
+  step_smote(all_outcomes()) -> rec_obj
+
+```
+
+### Cross - validation splits
+
+Second, let's make five different subsets for the cross-validation process. We will separate our train data into five different subsets of equal size. There will be five different validation sets for those. The remaining data from the training set will be used to create the training subset for each validation subset. This way, we will have five different subsets for training and validation. It will assist in obtaining results on our models that are more reliable.
+We used K-fold cross-validation to fine-tune the hyper-parameters of the algorithm. Due to the imbalance in the target class, it is necessary to rebalance the learning sample by drawing from a larger pool of data. Beginning with oversampling, the churn class was multiplied so that it would be proportional to the other class. Also employed was a random under-sampling strategy, which reduces the sample size of the broad class to be compared with the second class.
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE}
+folds <- vfold_cv(train_data, v = 5)
+```
+
+
+### Specs
+
+In this part, we are going to develop models and the processes that go along with the recipe that we have.
+
+#### Logistic regression
+Logistic Regression is a method for categorizing data that is utilized by machine learning systems. This statistical method involves doing the analysis of a dataset that contains one or more independent variables. Logistic regression is used to identify which model is most suitable for characterizing the connection between a dependent and an independent variable. The model that is determined to be most suitable is determined via the use of logistic regression. A logistic function is used as a modeling tool for the dependent variable in this scenario. The dependent variable is binary, which means that there are only two possible categories to be taken into consideration. Within this context, the value of churn might either be 0 or 1. As a result, this approach is utilized whenever one is dealing with binary information.
+
+Model's specs: 
+We dont have a lot of dependent variables so ridge regression(mixture = 0) is sufficient for the task. Also we will tune the amount of regularization for the model(penalty).
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE}
+logreg <- logistic_reg(
+  mode = "classification", 
+  engine = "glmnet", 
+  penalty = tune(), mixture = 0)
+
+# our workflow based on our recipe and model
+w_log <- workflow() %>%
+  add_recipe(rec_obj) %>%
+  add_model(logreg)
+
+```
+
+#### Random Forest model
+Another classifier model utilized in the project is the random forest. Random forest is an assembly of several different decision trees that are all independent of one another, as its name suggests. Each random forest tree provides a prediction regarding the classification, and the final classification is determined based on which predictions receive the most votes. It is a meta-estimator that works by fitting several decision tree classifiers on distinct subsamples of the dataset in order to increase predicted accuracy and regulate over-fitting. This is accomplished via the use of averaging.
+
+Lets try random forest
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE}
+rf_model <- rand_forest(
+  mode = "classification", 
+  engine = "ranger",
+  trees = 100,
+  mtry = tune(), 
+  min_n = tune())
+
+w_rf <- workflow() %>%
+  add_recipe(rec_obj) %>%
+  add_model(rf_model)
+```
+
+#### Bosted tree model
+Models using a boosted regression tree (BRT) combine decision tree algorithms with boosting techniques. Similar to the Random Forest model, BRTs involve fitting several decision trees in order to fine-tune the model's performance. The selection criteria for the data used in the tree-building processes is one area where these two approaches diverge. For each new tree constructed, both methods select a portion of the data at random. Every sample taken at random contains the same amount of records as the full dataset. Data that is picked in one tree can be returned to the complete dataset for use in another. BRTs use the boosting approach, in which the input data are weighted in successive trees, as opposed to the bagging method employed by Random Forest models, which assigns equal likelihood to each occurrence in future sample selections. Data that was poorly modeled by earlier trees has a greater chance of being picked in the current tree due to the weights. Thus, the model will account for the mistake in the forecast of the first tree when fitting the second tree, and so on. The model constantly strives for better accuracy by considering the fit of previously constructed trees. Boosting is the only technique that uses this method of successive steps.
+
+```{r}
+
+bt_tune_model <- boost_tree(mode = "classification", engine = "xgboost", 
+                       mtry = 5,
+                       min_n = tune(),
+                       tree_depth = tune(),
+                       learn_rate = tune(),
+                       loss_reduction = tune(),
+                       sample_size = tune(),
+                       trees = 100)
+w_tune_bt <- workflow() %>%
+  add_recipe(rec_obj) %>%
+  add_model(bt_tune_model)
+
+```
+
+#### Knn model
+The initials KNN refer to the "K-Nearest Neighbor" algorithm. For each new, unclassified, and unpredicted variable, K represents the number of its nearest neighbors. Let's examine a relevant real-world case in depth before we dive into this fantastic method. We often hear that you and the people in your immediate social circle share a great deal in common, whether it's a way of thinking, a set of values, a set of work habits, or anything else. Because of this, we tend to form relationships with those who we see as being most like ourselves. This is also the underlying idea behind the KNN algorithm. This method seeks to identify the nearest neighbors of a new, unclassified data item. This strategy is distance-based.
+
+
+```{r}
+knn_model <- nearest_neighbor(mode = "classification",
+                              neighbors = tune(),
+                              engine = "kknn")
+w_knn <- workflow() %>%
+  add_recipe(rec_obj) %>%
+  add_model(knn_model)
+```
+
+
+### Tuning models
+In this section we will find best hyper parameters for our models. The hyperparameters of machine learning algorithms let you fine-tune the algorithm's behavior to work best with your data. Parameters, discovered by a learning method, are the model's internal coefficients or weights; hyperparameters are different. Hyperparameters, in contrast to parameters, are practitioner-specified during model setup. Knowing what values to use for the hyperparameters of a particular algorithm on a specific dataset can be difficult, hence it is standard practice to employ random or grid search algorithms to try out a variety of hyperparameter values. The longer it takes to fine-tune an algorithm, the more hyperparameters it has. Selecting a small group of model hyperparameters to search or tweak is thus preferable. The hyperparameters in a model are not all of equal importance. A machine learning algorithm's behavior and, by extension, its efficiency, may be drastically altered by adjusting certain hyperparameters.
+
+One can plot a classification model's accuracy against the area under the receiver operating characteristic (ROC) curve in order to get a visual representation of how well the model works across a range of thresholds. ROC stands for receiver operating characteristic. The phrase "Area under the ROC Curve" is what the acronym AUC stands for. Therefore, the area under the whole ROC curve in two dimensions is what is meant to be measured by the term "AUC." It is possible to analyze a logistic regression model multiple times with different classification criteria in order to obtain the points on a ROC curve; however, doing so would be inefficient. We are fortunate enough to have access to these data thanks to an efficient sorting-based method known as AUC. The roc_auc value will be used to select the hyper-parameters.
+
+#### Logistic regression
+There are no crucial hyperparameters in logistic regression. Nevertheless, by employing regularization, noticeable improvements become apparent (penalty)
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE, cache=TRUE}
+#metrics we will use for finetuning, for this task I chose sensitivity, specificity and area under the ROC curve 
+met <- metric_set(sensitivity, specificity, roc_auc)
+
+# tuning parameters from 0.001 to 1 
+grid <- tibble(penalty = 10^seq(-3, 0, length.out = 10))
+
+# traing our model on cv folds
+lr_res <- w_log %>% 
+  tune_grid(resamples = folds, grid = grid, metrics = met)
+
+autoplot(lr_res)
+
+```
+To have superior stability of outcomes for correlated data and data with a large number of variables relative to the sample size, regression models are typically penalized. Oftentimes, penalized regression models are chosen over more standard selection techniques.Generally, it is best to have higher values with anything ROC curve related. Therefore, to maximize ROC_AUC lets choose penalty 0.01, since if we go any higher the values start to decrease. We can now proceed to fit whole training data on that model.
+
+#### Random Forest model
+The most important parameter is the number of variables randomly sampled as candidates at each split (mtry).The min_n argument specifies the minimum number of trees to use in a random forest, which is an essential setting.
+
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE, cache=TRUE}
+rf_grid <- expand.grid(
+      mtry = c(2, 5, 10), 
+      min_n = c(20, 100, 200, 300))
+
+rf_res <- w_rf %>% 
+  tune_grid(resamples = folds, grid = rf_grid, metrics = met)
+
+rf_res %>% autoplot()
+```
+
+Let's choose min_n = 200, mtry = 5 since they generate the highest roc value and still has acceptable sensitivity and specificity.
+
+#### Bosted tree model
+In the Boosted Tree model the he min_n hyper paramater is the 
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE, cache=TRUE}
+xgb_grid <- grid_latin_hypercube(
+  tree_depth(),
+  min_n(),
+  loss_reduction(),
+  sample_size = sample_prop(),
+  learn_rate(),
+  size = 15
+)
+xgb_res2 <- tune_grid(
+  w_tune_bt,
+  folds,
+  xgb_grid,
+  control_grid(save_pred = TRUE)
+)
+xgb_res2 %>% collect_metrics()
+```
+
+Lets choose hyper parameters with highest roc_auc. Therefore min_n= 3 and tree_depth = 11.
+
+#### Knn model
+The number of neighbors (n neighbors) is KNN's most crucial hyperparameter. There must be extensive testing of values between 1 and 21, or at least of the odd integers.Therefore it is the only parameter we tune in knn model, that is, the value of k. It specifies how many adjacent neighbors must be examined before a classification can be made.
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE, cache=TRUE}
+knn_res <- tune_grid(
+  w_knn,
+  folds,
+  grid = tibble(neighbors = c(40,80,150)),
+  control_grid(save_pred = TRUE)
+)
+
+knn_res %>% collect_metrics()
+```
+
+The area under the receiver operating characteristic curve (AUC) is a measure of the degree to which two groups may be distinguished. It reveals the extent to which the model can differentiate across groups. If the AUC is higher, the model is more accurate at identifying classes with a value of 1 and classes with a value of 0. The highest roc_auc with 150 neighbors
+
+### Final Model Building
+
+Now we will apply our parameters from previous section and train out models on full train set.
+
+#### Logistic regression
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE, cache=TRUE}
+logreg <- logistic_reg(
+  mode = "classification", 
+  engine = "glmnet", 
+  penalty = 0.01, mixture = 0)
+
+w_log <- workflow() %>%
+  add_recipe(rec_obj) %>%
+  add_model(logreg)
+
+final_log_model <- w_log %>% 
+  fit(train_data)
+```
+
+#### Random Forest model
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE, cache=TRUE}
+rf_model <- rand_forest(
+  mode = "classification", 
+  engine = "ranger",
+  trees = 100,
+  mtry = 5, 
+  min_n = 200)
+
+w_rf <- workflow() %>%
+  add_recipe(rec_obj) %>%
+  add_model(rf_model)
+
+final_rf_model <- w_rf %>% 
+  fit(train_data)
+```
+
+
+#### Bosted tree model
+
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE, cache=TRUE}
+bt_model <- boost_tree(mode = "classification", engine = "xgboost", 
+                       trees = 100,
+                       mtry = 10,
+                       learn_rate = 0.174,
+                       tree_depth = 11,
+                       loss_reduction = 26.8,
+                       sample_size = 0.949,
+                       min_n = 3)
+w_bt <- workflow() %>%
+  add_recipe(rec_obj) %>%
+  add_model(bt_model)
+
+final_bt_model <- w_bt %>% 
+  fit(train_data)
+```
+
+#### Knn model
+
+KNN is a supervised learning algorithm that predicts the output of the data points using a labeled input data set. One of the simplest machine learning algorithms, it can be used to solve a wide range of issues. It primarily relies on similarity of features.
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE, cache=TRUE}
+
+knn_model <- nearest_neighbor(mode = "classification",
+                              neighbors = 150,
+                              engine = "kknn")
+w_knn <- workflow() %>%
+  add_recipe(rec_obj) %>%
+  add_model(knn_model)
+
+
+final_knn_model <- w_knn %>% 
+  fit(train_data)
+
+```
+
+
+
+### Test set predictions
+
+In this section we well evaluate how our models performed on the test set.
+
+#### Logistic regression
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE}
+pred <- augment(final_log_model, test_data)
+test_data %>%
+  mutate(prediction = pred$.pred_class) %>% 
+  conf_mat(churn, prediction) %>% 
+  autoplot(type = "heatmap")
+
+
+```
+
+As we can see model have a lot of false positive predictions (115) and false negatives (373).
+Now let's calculate the accuracy using the confusion matrix.
+```{r}
+TP<-1220
+FP<-115
+TN<-293
+FN<-373
+accuracy<-(TP+TN)/(TP+FP+TN+FN)
+round(accuracy,4)
+```
+The model's accuracy is 75.61%
+
+#### Random Forest model
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE}
+pred <- augment(final_rf_model, test_data)
+test_data %>%
+  mutate(prediction = pred$.pred_class) %>% 
+  conf_mat(churn, prediction) %>% 
+  autoplot(type = "heatmap")
+```
+
+Evaluate the model accuracy
+```{r}
+
+TP<-1371
+FP<-132
+TN<-276
+FN<-222
+accuracy<-(TP+TN)/(TP+FP+TN+FN)
+round(accuracy,4)
+```
+It has relatively better accuracy of 82.31%.
+
+#### Bosted tree model
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE}
+pred <- augment(final_bt_model, test_data)
+test_data %>%
+  mutate(prediction = pred$.pred_class) %>% 
+  conf_mat(churn, prediction) %>% 
+  autoplot(type = "heatmap")
+```
+
+```{r}
+TP<-1486
+FP<-190
+TN<-218
+FN<-107
+accuracy<-(TP+TN)/(TP+FP+TN+FN)
+round(accuracy,4)
+```
+
+This model shows best results, than previous two since it has an accuracy of 85.16%. It could be useful in prediction of churn.
+
+#### Knn model
+
+```{r, collapse=TRUE, warning=FALSE, message=FALSE}
+pred <- augment(final_knn_model, test_data)
+test_data %>%
+  mutate(prediction = pred$.pred_class) %>% 
+  conf_mat(churn, prediction) %>% 
+  autoplot(type = "heatmap")
+```
+
+Same issue as first two models with high level false positives. What about the accuracy?
+
+```{r}
+TP<-1225
+FP<-112
+TN<-296
+FN<-386
+accuracy<-(TP+TN)/(TP+FP+TN+FN)
+round(accuracy,4)
+```
+
+Yes, it only has a 75.33% chance of predicting the class values. So the Boosted Tree model is definitely the most suitable since it has the best prediction ability.
+
+With the test accuracy of 75.33%, our model might have not shown over fitting here. Why so? The value of K or the number of neighbors is not too low, the model picks only the values that are closest to the data sample, thus forming not very complex decision boundary.
+
+# Conclusion
+
+To foresee if a client will quit the bank, we developed four separate models, that is, a logistic regression, boosted tree, random forest model, and the K-nearest neighbor models. They were fitted and used to predict the churn class variable. The actual and predicted values were used to generate confusion matrices so as to compare the four models.Aside from the enhanced tree model, all of the other models had a lot of false positives. This is likely due to the lack of signal in our dataset, as demonstrated in the EDA analysis. Additionally, from the EDA we were able to identify that significant variables were country, gender, age, active and the product_number.
+This project was able to provide an appropriate model that could predict churn when given a group of predictor variables. The most effective method was the boosted tree with the highest prediction accuracy (84.81%). The other three had a prediction accuracy lower than 80%. According to the results of the preductions, these model is not very strong at distinguishing between customers who will remain and customers who will depart. An error rate that is more than twenty percent might be problematic for the bank. As was said previously, a client retention rate of 5% is highly significant in terms of the amount of income the organization receives.Hence 20% is quite significant when predicting churn. For future research it is possible to use feature engineering and deep learning models since they are the next logical steps to further analyse and predict churn.
+
+# References
+
+Rahman, M., & Kumar, V. (2020, November). Machine learning based customer churn prediction in banking. In 2020 4th International Conference on Electronics, Communication and Aerospace Technology (ICECA) (pp. 1196-1201). IEEE.
+
+Jain, H., Yadav, G., & Manoov, R. (2021). Churn prediction and retention in banking, telecom and IT sectors using machine learning techniques. In Advances in Machine Learning and Computational Intelligence (pp. 137-156). Springer, Singapore.
+
+Jain, H., Yadav, G., & Manoov, R. (2021). Churn prediction and retention in banking, telecom and IT sectors using machine learning techniques. In Advances in Machine Learning and Computational Intelligence (pp. 137-156). Springer, Singapore.
+
+Shirazi, F., & Mohammadi, M. (2019). A big data analytics model for customer churn prediction in the retiree segment. International Journal of Information Management, 48, 238-253.
+
+Oyeniyi, A. O., Adeyemo, A. B., Oyeniyi, A. O., & Adeyemo, A. B. (2015). Customer churn analysis in banking sector using data mining techniques. Afr J Comput Ict, 8(3), 165-174.
+
+Sayed, H., Abdel-Fattah, M. A., & Kholief, S. (2018). Predicting potential banking customer churn using apache spark ML and MLlib packages: a comparative study. International Journal of Advanced Computer Science and Applications, 9(11).
+
+Pribil, J., & Polejova, M. (2017). A Churn Analysis Using Data Mining Techniques: Case of Electricity Distribution Company. In Proceedings of the World Congress on Engineering and Computer Science (Vol. 1, pp. 1-6).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
